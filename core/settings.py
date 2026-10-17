@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k(4@!5_tbl_6dyylmci*tg$&&wg*-i+v6vb**siu7i72^lqi0w'
+SECRET_KEY = 'django-insecure-i!9=^m(ynwoi70hr#!&fi(a&2x9w06_pc^(%a@i^w(n4o@#*ab'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -72,6 +72,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
+
+'''
+Configurações para MySQL
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'projectus',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
+    }
+}
+'''
 
 DATABASES = {
     'default': {
@@ -126,3 +143,7 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Dados de ProjectUs
+
+SITENAME = 'ProjectUs'
