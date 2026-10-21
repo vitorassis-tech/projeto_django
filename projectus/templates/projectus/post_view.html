@@ -1,0 +1,38 @@
+{% extends 'projectus/_base.html' %}
+
+{% block content %}
+
+<article>
+
+    <h2>{{ post.title }}</h2>
+
+    <small>Por {{ author_name }} em {{ post.created_at |date:"d/m/Y"}}.</small>
+
+    <p><img src="{{ post.thumbnail }}" alt="{{ post.title }}"></p>
+
+    <div style="padding: 16px 0">
+        {{ post.textbody }}
+    </div>
+
+</article>
+
+<aside>
+    <h3>Outros artigos de {{ author_name }}</h3>
+
+    {% for post in posts %}
+
+    <div>
+        <img src="{{ post.thumbnail }}" alt="{{ post.title }}" width="150">
+        <h4><a href="{% url 'post_view' id=post.id  %}">{{ post.title }}</a></h4>
+        <p>{{ post.summary }}</p>
+    </div>
+    <hr>
+
+    {% empty %}
+
+    <p>Não achei nada.</p>
+
+    {% endfor %}
+</aside>
+
+{% endblock %}
