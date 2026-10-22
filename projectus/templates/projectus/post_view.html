@@ -14,6 +14,42 @@
         {{ post.textbody }}
     </div>
 
+    <hr>
+    <hr>
+
+    {% if user.is_authenticated %}
+    <h3>Comente</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit">Enviar</button>
+    </form>
+    &nbsp;
+    {% else %}
+    <p><a href="/accounts/login/">Logue-se para comentar</a></p>
+    {% endif %}
+
+    <hr>
+    <hr>
+
+    <h3>Comentários</h3>
+
+    {% for comment in comments %}
+    <p>
+        <strong>{{ comment.user.username }}</strong>
+        <small>{{ comment.created_at|date:"d/m/Y \à\s H:i" }}</small>
+    </p>
+    <p>{{ comment.comment }}</p>
+
+    <hr>
+    {% empty %}
+    <p>Nenhum comentário ainda.</p>
+    {% endfor %}
+
+    <hr>
+    
+
 </article>
 
 <aside>
