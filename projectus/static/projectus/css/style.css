@@ -591,6 +591,10 @@ textarea[aria-invalid="true"] {
 }
 
 .post-card-summary {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* resumo com no máximo 3 linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: var(--text-muted);
     font-size: 0.95rem;
     flex: 1; /* alinha o "Ler artigo" no rodapé do card */
@@ -726,8 +730,18 @@ textarea[aria-invalid="true"] {
     height: 64px;
     flex-shrink: 0;
     object-fit: cover;
+    object-position: left center; /* mostra o lado com o nome do tema */
     border-radius: var(--radius-sm);
     background: var(--primary-soft);
+}
+
+/* Limita título e resumo a 2 linhas (o resto vira "...") */
+.mini-card h4,
+.mini-card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .mini-card h4 {
