@@ -2,73 +2,74 @@
 
 {% block content %}
 
-<article>
+<div class="post-layout">
 
-    <h2>{{ post.title }}</h2>
+    <article class="card post-article">
 
-    <small>Por {{ author_name }} em {{ post.created_at |date:"d/m/Y"}}.</small>
+        <header class="post-header">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <p class="meta">Por <strong>{{ author_name }}</strong> em {{ post.created_at |date:"d/m/Y"}}.</p>
+        </header>
 
-    <p><img src="{{ post.thumbnail }}" alt="{{ post.title }}"></p>
+        <img class="post-cover" src="{{ post.thumbnail }}" alt="{{ post.title }}">
 
-    <div style="padding: 16px 0">
-        {{ post.textbody }}
-    </div>
+        <div class="post-body">{{ post.textbody }}</div>
 
-    <hr>
-    <hr>
+        <section class="comments">
 
-    {% if user.is_authenticated %}
-    <h3>Comente</h3>
+            {% if user.is_authenticated %}
+            <h2 class="section-title">Comente</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_div }}
-        <button type="submit">Enviar</button>
-    </form>
-    &nbsp;
-    {% else %}
-    <p><a href="/accounts/login/">Logue-se para comentar</a></p>
-    {% endif %}
+            <form method="POST" class="form comment-form">
+                {% csrf_token %}
+                {{ form.as_div }}
+                <button type="submit">Enviar</button>
+            </form>
+            {% else %}
+            <p class="notice"><a href="/accounts/login/">Logue-se para comentar</a></p>
+            {% endif %}
 
-    <hr>
-    <hr>
+            <h2 class="section-title">Comentários <span class="badge">{{ comments|length }}</span></h2>
 
-    <h3>Comentários</h3>
+            {% for comment in comments %}
+            <div class="comment">
+                <span class="avatar">{{ comment.user.username|first|upper }}</span>
+                <div class="comment-content">
+                    <p class="comment-meta">
+                        <strong>{{ comment.user.username }}</strong>
+                        <small>{{ comment.created_at|date:"d/m/Y \à\s H:i" }}</small>
+                    </p>
+                    <p class="comment-text">{{ comment.comment }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="empty-state">Nenhum comentário ainda.</p>
+            {% endfor %}
 
-    {% for comment in comments %}
-    <p>
-        <strong>{{ comment.user.username }}</strong>
-        <small>{{ comment.created_at|date:"d/m/Y \à\s H:i" }}</small>
-    </p>
-    <p>{{ comment.comment }}</p>
+        </section>
 
-    <hr>
-    {% empty %}
-    <p>Nenhum comentário ainda.</p>
-    {% endfor %}
+    </article>
 
-    <hr>
-    
+    <aside class="card post-sidebar">
+        <h3 class="sidebar-title">Outros artigos de {{ author_name }}</h3>
 
-</article>
+        {% for post in posts %}
 
-<aside>
-    <h3>Outros artigos de {{ author_name }}</h3>
+        <a href="{% url 'post_view' id=post.id %}" class="mini-card">
+            <img src="{{ post.thumbnail }}" alt="{{ post.title }}" loading="lazy">
+            <div>
+                <h4>{{ post.title }}</h4>
+                <p>{{ post.summary }}</p>
+            </div>
+        </a>
 
-    {% for post in posts %}
+        {% empty %}
 
-    <div>
-        <img src="{{ post.thumbnail }}" alt="{{ post.title }}" width="150">
-        <h4><a href="{% url 'post_view' id=post.id  %}">{{ post.title }}</a></h4>
-        <p>{{ post.summary }}</p>
-    </div>
-    <hr>
+        <p class="meta">Não achei nada.</p>
 
-    {% empty %}
+        {% endfor %}
+    </aside>
 
-    <p>Não achei nada.</p>
-
-    {% endfor %}
-</aside>
+</div>
 
 {% endblock %}

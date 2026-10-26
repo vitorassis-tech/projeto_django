@@ -1,0 +1,893 @@
+/* ==========================================================================
+   ProjectUs - Folha de estilos principal
+   --------------------------------------------------------------------------
+   Organização do arquivo:
+     1. Variáveis (cores, fontes, espaçamentos)  -> mude a aparência aqui
+     2. Reset e base
+     3. Layout (container, cabeçalho, rodapé)
+     4. Componentes reutilizáveis (botões, cards, avatar, avisos)
+     5. Formulários
+     6. Página inicial (grade de posts)
+     7. Página do post (artigo, comentários, lateral)
+     8. Páginas de formulário (login, cadastro, perfil, senha)
+     9. Responsividade (tablet e celular)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIÁVEIS
+   Para trocar a cor principal do site inteiro, altere --primary e
+   --primary-dark (e a versão clara --primary-soft).
+   ========================================================================== */
+:root {
+    /* Cores principais */
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-soft: #eef2ff;
+
+    /* Tons neutros */
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text: #1f2937;
+    --text-strong: #111827;
+    --text-muted: #6b7280;
+
+    /* Cores de estado */
+    --danger: #dc2626;
+    --danger-soft: #fef2f2;
+    --success: #059669;
+
+    /* Tipografia */
+    --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    /* Bordas arredondadas */
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
+    --shadow: 0 4px 12px rgba(17, 24, 39, 0.06), 0 1px 3px rgba(17, 24, 39, 0.05);
+    --shadow-lg: 0 12px 28px rgba(17, 24, 39, 0.10), 0 2px 6px rgba(17, 24, 39, 0.06);
+
+    /* Espaçamentos */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+
+    /* Largura máxima do conteúdo */
+    --container: 1140px;
+
+    /* Animação padrão */
+    --transition: 0.2s ease;
+}
+
+
+/* ==========================================================================
+   2. RESET E BASE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    margin: 0 0 var(--space-3);
+    color: var(--text-strong);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+p {
+    margin: 0 0 var(--space-4);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+small {
+    color: var(--text-muted);
+}
+
+/* Contorno visível ao navegar pelo teclado (acessibilidade) */
+:focus-visible {
+    outline: 3px solid rgba(79, 70, 229, 0.35);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT
+   ========================================================================== */
+
+/* Centraliza o conteúdo com largura máxima */
+.container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+}
+
+/* --- Cabeçalho --- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 68px;
+}
+
+/* Logo */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-strong);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+}
+
+.logo:hover {
+    color: var(--text-strong);
+    text-decoration: none;
+}
+
+.logo-mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: #fff;
+    font-size: 1rem;
+}
+
+/* Menu de navegação */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.nav-link {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+    background: var(--primary-soft);
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* Usuário logado no menu */
+.nav-user {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+    border-radius: 999px;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav-user:hover {
+    background: var(--primary-soft);
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* O formulário do botão "Sair" fica na mesma linha do menu */
+.nav-form {
+    display: inline;
+    margin: 0;
+}
+
+/* --- Conteúdo principal --- */
+.site-main {
+    flex: 1; /* empurra o rodapé para o fim da tela */
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-7);
+}
+
+/* --- Rodapé --- */
+.site-footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: var(--space-5) 0;
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   4. COMPONENTES REUTILIZÁVEIS
+   ========================================================================== */
+
+/* --- Botões --- */
+.btn,
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: var(--primary);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.btn:hover,
+button:hover {
+    background: var(--primary-dark);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn:active,
+button:active {
+    transform: translateY(1px);
+}
+
+/* Variação: botão discreto (contorno) */
+.btn-ghost {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.btn-ghost:hover {
+    background: var(--bg);
+    color: var(--text-strong);
+    box-shadow: none;
+}
+
+/* Variação: tamanho pequeno */
+.btn-sm {
+    padding: 7px 14px;
+    font-size: 0.875rem;
+}
+
+/* Variação: largura total */
+.btn-block {
+    width: 100%;
+}
+
+/* --- Card (caixa branca com sombra) --- */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- Avatar (círculo com a inicial do usuário) --- */
+.avatar {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* --- Selo / contador --- */
+.badge {
+    display: inline-block;
+    min-width: 24px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* --- Textos auxiliares --- */
+.meta {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+}
+
+/* --- Avisos e estado vazio --- */
+.notice {
+    padding: var(--space-4);
+    border-radius: var(--radius);
+    background: var(--primary-soft);
+    color: var(--text);
+}
+
+.empty-state {
+    padding: var(--space-6) var(--space-4);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.alert-error {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-4);
+}
+
+/* --- Link com seta ("Ler artigo →") --- */
+.link-arrow {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.link-arrow span {
+    display: inline-block;
+    transition: transform var(--transition);
+}
+
+.link-arrow:hover {
+    text-decoration: none;
+}
+
+.link-arrow:hover span {
+    transform: translateX(4px);
+}
+
+
+/* ==========================================================================
+   5. FORMULÁRIOS
+   Estes estilos valem para formulários gerados pelo Django
+   ({{ form.as_p }}, {{ form.as_div }} e campos manuais).
+   ========================================================================== */
+.form p,
+.form > div,
+.form-field {
+    margin: 0 0 var(--space-4);
+}
+
+label {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--text-strong);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="number"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+/* Campo com erro (o Django adiciona aria-invalid="true") */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: var(--danger);
+}
+
+/* Textos de ajuda do Django (ex.: regras de senha) */
+.helptext {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.helptext ul,
+.form > ul:not(.errorlist) {
+    margin: calc(var(--space-2) * -1) 0 var(--space-4);
+    padding-left: 18px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+/* Lista de erros do Django */
+.errorlist {
+    list-style: none;
+    margin: 0 0 var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: 0.85rem;
+}
+
+/* Erro de campo no formulário de perfil */
+.field-error {
+    margin-top: var(--space-1);
+    color: var(--danger);
+    font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   6. PÁGINA INICIAL
+   ========================================================================== */
+.page-header {
+    margin-bottom: var(--space-6);
+}
+
+.page-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 800;
+    margin-bottom: var(--space-1);
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Grade de cards: 3 colunas no computador */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Imagem do card com proporção fixa 16:9 */
+.post-card-media {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--primary-soft);
+}
+
+.post-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.post-card:hover .post-card-media img {
+    transform: scale(1.05);
+}
+
+.post-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--space-5);
+}
+
+.post-card-body .meta {
+    display: block;
+    margin-bottom: var(--space-1);
+}
+
+.post-card-title {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-2);
+}
+
+.post-card-title a {
+    color: var(--text-strong);
+}
+
+.post-card-title a:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.post-card-summary {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    flex: 1; /* alinha o "Ler artigo" no rodapé do card */
+}
+
+/* O estado vazio ocupa a linha inteira da grade */
+.post-grid .empty-state {
+    grid-column: 1 / -1;
+}
+
+
+/* ==========================================================================
+   7. PÁGINA DO POST
+   ========================================================================== */
+
+/* Duas colunas: artigo + lateral */
+.post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: var(--space-6);
+    align-items: start;
+}
+
+.post-article {
+    padding: var(--space-7);
+}
+
+.post-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: var(--space-2);
+}
+
+.post-header .meta strong {
+    color: var(--text);
+}
+
+.post-cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin: var(--space-5) 0;
+    background: var(--primary-soft);
+}
+
+/* Texto do post: leitura confortável e respeita as quebras de linha */
+.post-body {
+    font-size: 1.075rem;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+/* --- Comentários --- */
+.comments {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+}
+
+.comment-form {
+    margin-bottom: var(--space-7);
+}
+
+.comment-form button {
+    margin-top: calc(var(--space-2) * -1);
+}
+
+.comment {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment .avatar {
+    width: 38px;
+    height: 38px;
+}
+
+.comment-content {
+    min-width: 0; /* evita que textos longos estourem o layout */
+}
+
+.comment-meta {
+    margin: 0 0 var(--space-1);
+}
+
+.comment-meta strong {
+    color: var(--text-strong);
+    margin-right: var(--space-2);
+}
+
+.comment-text {
+    margin: 0;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+/* --- Lateral: outros artigos do autor --- */
+.post-sidebar {
+    position: sticky;
+    top: 92px;
+    padding: var(--space-5);
+}
+
+.sidebar-title {
+    font-size: 1rem;
+    margin-bottom: var(--space-4);
+}
+
+.mini-card {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    margin: 0 calc(var(--space-3) * -1);
+    border-radius: var(--radius);
+    color: inherit;
+    transition: background var(--transition);
+}
+
+.mini-card:hover {
+    background: var(--bg);
+    text-decoration: none;
+}
+
+.mini-card img {
+    width: 88px;
+    height: 64px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--primary-soft);
+}
+
+.mini-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-1);
+}
+
+.mini-card:hover h4 {
+    color: var(--primary);
+}
+
+.mini-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   8. PÁGINAS DE FORMULÁRIO (login, cadastro, perfil, senha)
+   ========================================================================== */
+.form-page {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--space-5);
+}
+
+.form-card {
+    width: 100%;
+    max-width: 460px;
+    padding: var(--space-6);
+    box-shadow: var(--shadow);
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: var(--space-1);
+}
+
+.form-subtitle {
+    color: var(--text-muted);
+    margin-bottom: var(--space-5);
+}
+
+/* Botão principal dos formulários ocupa a largura toda */
+.form-card .form button[type="submit"] {
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+/* Links abaixo do formulário (cadastre-se, esqueci a senha...) */
+.form-links {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: var(--space-4) 0 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.form-links li + li {
+    margin-top: var(--space-2);
+}
+
+.form-links a {
+    font-weight: 600;
+}
+
+/* Cards de mensagem (senha alterada, verifique seu e-mail...) */
+.status-icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-4);
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+
+/* ==========================================================================
+   9. RESPONSIVIDADE
+   ========================================================================== */
+
+/* --- Tablet (até 960px) --- */
+@media (max-width: 960px) {
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* A lateral desce para baixo do artigo */
+    .post-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .post-sidebar {
+        position: static;
+    }
+
+    .post-article {
+        padding: var(--space-6);
+    }
+}
+
+/* --- Celular (até 600px) --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 var(--space-4);
+    }
+
+    .header-inner {
+        min-height: 60px;
+    }
+
+    /* Esconde o "Olá, nome" e mantém só o avatar */
+    .nav-user-name,
+    .nav-hide-mobile {
+        display: none;
+    }
+
+    .nav-user {
+        padding: var(--space-1);
+    }
+
+    .nav-link {
+        padding: var(--space-2);
+    }
+
+    .site-main {
+        padding-top: var(--space-5);
+    }
+
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .post-article {
+        padding: var(--space-5) var(--space-4);
+    }
+
+    .post-cover {
+        margin: var(--space-4) 0;
+    }
+
+    .post-body {
+        font-size: 1rem;
+    }
+
+    .form-page {
+        padding-top: 0;
+    }
+
+    .form-card {
+        padding: var(--space-5) var(--space-4);
+    }
+}

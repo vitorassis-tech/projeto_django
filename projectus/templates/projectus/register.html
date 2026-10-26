@@ -1,21 +1,25 @@
 {% extends 'projectus/_base.html' %}
 {% block content %}
 
-<h1>Criar conta</h1>
+<section class="form-page">
 
-<article>
+    <article class="card form-card">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cadastrar</button>
-    </form>
+        <h1 class="form-title">Criar conta</h1>
+        <p class="form-subtitle">Preencha os dados abaixo para se cadastrar.</p>
 
-    <p>
-        Já possui uma conta?
-        <a href="{% url 'login' %}">Entrar</a>
-    </p>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        </form>
 
-</article>
+        <ul class="form-links">
+            <li>Já possui uma conta? <a href="{% url 'login' %}">Entrar</a></li>
+        </ul>
+
+    </article>
+
+</section>
 
 {% endblock %}

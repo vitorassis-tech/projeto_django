@@ -4,24 +4,34 @@
 
 <section>
 
-    <h2>Posts Recentes</h2>
-
-    <p>{{ total }} posts.</p>
-
-    {% for post in posts %}
-
-    <div>
-        <img src="{{ post.thumbnail }}" alt="{{ post.title }}" width="150">
-        <h4><a href="{% url 'post_view' id=post.id  %}">{{ post.title }}</a></h4>
-        <p>{{ post.summary }}</p>
+    <div class="page-header">
+        <h1 class="page-title">Posts Recentes</h1>
+        <p class="page-subtitle">{{ total }} posts.</p>
     </div>
-    <hr>
 
-    {% empty %}
+    <div class="post-grid">
 
-    <p>Não achei nada.</p>
+        {% for post in posts %}
 
-    {% endfor %}
+        <article class="card post-card">
+            <a href="{% url 'post_view' id=post.id %}" class="post-card-media">
+                <img src="{{ post.thumbnail }}" alt="{{ post.title }}" loading="lazy">
+            </a>
+            <div class="post-card-body">
+                <span class="meta">{{ post.created_at|date:"d/m/Y" }}</span>
+                <h2 class="post-card-title"><a href="{% url 'post_view' id=post.id %}">{{ post.title }}</a></h2>
+                <p class="post-card-summary">{{ post.summary }}</p>
+                <a href="{% url 'post_view' id=post.id %}" class="link-arrow">Ler artigo <span>&rarr;</span></a>
+            </div>
+        </article>
+
+        {% empty %}
+
+        <p class="empty-state">Não achei nada.</p>
+
+        {% endfor %}
+
+    </div>
 
 </section>
 

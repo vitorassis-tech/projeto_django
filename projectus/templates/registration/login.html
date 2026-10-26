@@ -4,20 +4,25 @@
 
 {% block content %}
 
-<section>
+<section class="form-page">
 
-    <h1>Login</h1>
+    <div class="card form-card">
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p><button type="submit">Entrar</button></p>
-    </form>
+        <h1 class="form-title">Login</h1>
+        <p class="form-subtitle">Entre com seu usuário e senha.</p>
 
-    <ul>
-        <li>Não possui uma conta? <a href="{% url 'register' %}">Cadastre-se</a></li>
-        <li>Esqueceu sua senha? <a href="{% url 'password_reset' %}">Definir nova senha</a></li>
-    </ul>
+        <form method="POST" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Entrar</button>
+        </form>
+
+        <ul class="form-links">
+            <li>Não possui uma conta? <a href="{% url 'register' %}">Cadastre-se</a></li>
+            <li>Esqueceu sua senha? <a href="{% url 'password_reset' %}">Definir nova senha</a></li>
+        </ul>
+
+    </div>
 
 </section>
 
